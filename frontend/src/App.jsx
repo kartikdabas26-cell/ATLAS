@@ -615,27 +615,35 @@ function App() {
 
     return onAuthStateChanged(
       firebaseAuth,
-      (user) => {
+      async (user) => {
         setError("");
         setGraphError("");
         setDependencyError("");
         setCoverageError("");
-        setAuth(
-          user
-            ? {
-                subject: user.uid,
-                email:
-                  user.email || "",
-                name:
-                  user.displayName ||
-                  user.email ||
-                  "ATLAS user",
-                picture:
-                  user.photoURL ||
-                  null,
-              }
-            : false
-        );
+
+        if (!user) {
+          setAuth(false);
+          return;
+        }
+
+        try {
+          await user.getIdToken();
+          setAuth({
+            subject: user.uid,
+            email: user.email || "",
+            name:
+              user.displayName ||
+              user.email ||
+              "ATLAS user",
+            picture: user.photoURL || null,
+          });
+        } catch (err) {
+          console.error(
+            "ATLAS Firebase token initialization error:",
+            err
+          );
+          setAuth(false);
+        }
       }
     );
   }, []);

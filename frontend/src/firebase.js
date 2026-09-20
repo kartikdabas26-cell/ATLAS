@@ -78,7 +78,7 @@ export async function getFirebaseIdToken() {
     throw new Error("No authenticated Firebase user.");
   }
 
-  const token = await user.getIdToken(true);
+  const token = await user.getIdToken();
 
   if (!token) {
     throw new Error("Unable to obtain Firebase ID token.");
