@@ -248,6 +248,7 @@ button {
 
 .nav-item {
   min-height: 42px;
+  width: 100%;
 
   display: flex;
   align-items: center;
@@ -255,11 +256,16 @@ button {
 
   padding: 0 12px;
 
+  border: 1px solid transparent;
   border-radius: 9px;
+  background: transparent;
 
   color: #719083;
 
   font-size: 11px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
 
   transition: 0.2s;
 }
@@ -284,6 +290,41 @@ button {
     );
 
   border: 1px solid rgba(73, 228, 125, 0.2);
+}
+
+.settings-panel {
+  margin-top: 42px;
+  padding: 28px;
+  border: 1px solid rgba(133, 206, 164, 0.2);
+  border-radius: 24px;
+  background: rgba(10, 30, 24, 0.55);
+}
+
+.settings-panel h2 {
+  margin: 8px 0;
+  color: #e8f5eb;
+  font-size: 28px;
+}
+
+.settings-panel p {
+  max-width: 680px;
+  color: rgba(230, 244, 235, 0.68);
+  line-height: 1.7;
+}
+
+.settings-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 14px 16px;
+  border: 1px solid rgba(133, 206, 164, 0.16);
+  border-radius: 12px;
+  color: #a9d8b1;
+}
+
+.settings-summary strong {
+  color: #e8f5eb;
 }
 
 .sidebar-bottom {

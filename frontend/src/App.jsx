@@ -229,6 +229,9 @@ function getUserInitials(name, email) {
 function App() {
   const [auth, setAuth] = useState(null);
 
+  const [activeDashboard, setActiveDashboard] =
+    useState("home");
+
   const [shockRegion, setShockRegion] =
     useState("europe");
 
@@ -791,6 +794,24 @@ function App() {
       (option) => option.value === shockRegion
     )?.label || "Europe";
 
+  function openDashboard(dashboard) {
+    setActiveDashboard(dashboard);
+
+    const targetId =
+      dashboard === "home"
+        ? "atlas-home"
+        : `atlas-${dashboard}`;
+
+    window.setTimeout(() => {
+      document
+        .getElementById(targetId)
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+    }, 0);
+  }
+
   /* =======================================================
      EXPORT
      ======================================================= */
@@ -1079,32 +1100,43 @@ function App() {
           <NavItem
             icon="home"
             label="Home"
-            active
+            active={activeDashboard === "home"}
+            onClick={() => openDashboard("home")}
           />
 
           <NavItem
             icon="scenario"
             label="Scenario Lab"
+            active={activeDashboard === "scenario"}
+            onClick={() => openDashboard("scenario")}
           />
 
           <NavItem
             icon="graph"
             label="Network Graph"
+            active={activeDashboard === "graph"}
+            onClick={() => openDashboard("graph")}
           />
 
           <NavItem
             icon="timeline"
             label="Timeline"
+            active={activeDashboard === "timeline"}
+            onClick={() => openDashboard("timeline")}
           />
 
           <NavItem
             icon="report"
             label="Reports"
+            active={activeDashboard === "reports"}
+            onClick={() => openDashboard("reports")}
           />
 
           <NavItem
             icon="settings"
             label="Settings"
+            active={activeDashboard === "settings"}
+            onClick={() => openDashboard("settings")}
           />
         </nav>
 
@@ -1192,7 +1224,10 @@ function App() {
           </div>
         </header>
 
-        <section className="hero-section">
+        <section
+          id="atlas-home"
+          className="hero-section"
+        >
           <div className="hero-copy">
             <div className="section-label">
               ◦ START HERE / WHEAT SUPPLY
@@ -1279,7 +1314,10 @@ function App() {
           </div>
         )}
 
-        <section className="controls-grid">
+        <section
+          id="atlas-scenario"
+          className="controls-grid"
+        >
           <ControlCard
             number="01"
             label="1 / WHERE?"
@@ -1604,7 +1642,10 @@ function App() {
           </div>
         </section>
 
-        <section className="dependency-panel">
+        <section
+          id="atlas-reports"
+          className="dependency-panel"
+        >
           <div className="timeline-header">
             <div>
               <div className="section-label">
@@ -1778,7 +1819,10 @@ function App() {
           </div>
         </section>
 
-        <section className="atlas-graph-wrapper">
+        <section
+          id="atlas-graph"
+          className="atlas-graph-wrapper"
+        >
           <ButterflyMap
             graph={graphData}
             simulation={data}
@@ -1800,7 +1844,10 @@ function App() {
           )}
         </section>
 
-        <section className="timeline-section">
+        <section
+          id="atlas-timeline"
+          className="timeline-section"
+        >
           <div className="timeline-header">
             <div>
               <div className="section-label">
@@ -2925,6 +2972,30 @@ function App() {
           </div>
         </section>
 
+        <section
+          id="atlas-settings"
+          className="settings-panel"
+        >
+          <div className="section-label">
+            SETTINGS / YOUR ATLAS
+          </div>
+
+          <h2>
+            Your private workspace
+          </h2>
+
+          <p>
+            You are signed in as {auth.name}. Your
+            saved scenarios belong to your account and
+            are not shown to other users.
+          </p>
+
+          <div className="settings-summary">
+            <span>Signed-in account</span>
+            <strong>{auth.email}</strong>
+          </div>
+        </section>
+
         <footer className="dashboard-footer">
           <div>
             <Icon
@@ -3131,19 +3202,23 @@ function NavItem({
   icon,
   label,
   active,
+  onClick,
 }) {
   return (
-    <div
+    <button
+      type="button"
       className={`nav-item ${
         active ? "active" : ""
       }`}
+      onClick={onClick}
+      aria-current={active ? "page" : undefined}
     >
       <Icon
         type={icon}
         size={18}
       />
       <span>{label}</span>
-    </div>
+    </button>
   );
 }
 
