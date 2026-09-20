@@ -36,7 +36,9 @@ export const googleProvider = new GoogleAuthProvider();
 
 export { firebaseConfigured };
 
-export async function getFirebaseIdToken() {
+export async function getFirebaseIdToken(
+  forceRefresh = false
+) {
   if (!firebaseAuth) {
     throw new Error("Firebase authentication is not configured.");
   }
@@ -78,7 +80,7 @@ export async function getFirebaseIdToken() {
     throw new Error("No authenticated Firebase user.");
   }
 
-  const token = await user.getIdToken();
+  const token = await user.getIdToken(forceRefresh);
 
   if (!token) {
     throw new Error("Unable to obtain Firebase ID token.");

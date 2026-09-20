@@ -27,8 +27,8 @@ async function apiFetch(url, options = {}) {
     );
   }
 
-  async function request() {
-    const token = await getFirebaseIdToken();
+  async function request(forceRefresh = false) {
+    const token = await getFirebaseIdToken(forceRefresh);
     const headers = new Headers(options.headers || {});
 
     headers.set(
@@ -52,7 +52,7 @@ async function apiFetch(url, options = {}) {
     window.setTimeout(resolve, 300)
   );
 
-  return request();
+  return request(true);
 }
 
 /* =========================================================
@@ -384,7 +384,9 @@ function App() {
         const errorBody =
           await response.text();
 
-        throw new Error(errorBody);
+        throw new Error(
+          `HTTP ${response.status}: ${errorBody}`
+        );
       }
 
       const result =
@@ -409,8 +411,11 @@ function App() {
         err
       );
 
+      const status = err.message?.match(/\bHTTP (\d{3})\b/)?.[1];
       setError(
-        "ATLAS could not run this yet. Make sure you are signed in and the backend is running."
+        status === "401"
+          ? "Your sign-in has expired. Please log out and sign in again."
+          : "ATLAS could not run this yet. Make sure you are signed in and the backend is running."
       );
     } finally {
       setLoading(false);
