@@ -364,6 +364,53 @@ button {
   padding: 0 32px 50px;
 }
 
+.main-content:not(.dashboard-home) .dashboard-home,
+.main-content:not(.dashboard-scenario) .dashboard-scenario,
+.main-content:not(.dashboard-graph) .dashboard-graph,
+.main-content:not(.dashboard-timeline) .dashboard-timeline,
+.main-content:not(.dashboard-reports) .dashboard-reports,
+.main-content:not(.dashboard-settings) .dashboard-settings {
+  display: none;
+}
+
+.dashboard-intro {
+  max-width: 780px;
+  padding: 34px 0 24px;
+}
+
+.dashboard-intro h2 {
+  margin: 8px 0;
+  color: #e8f5eb;
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.dashboard-intro p {
+  max-width: 650px;
+  margin: 0;
+  color: rgba(230, 244, 235, 0.68);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.dashboard-view {
+  animation: dashboard-reveal 0.35s ease both;
+}
+
+@keyframes dashboard-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .top-header {
   height: 76px;
 

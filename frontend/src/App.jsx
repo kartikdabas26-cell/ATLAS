@@ -796,21 +796,44 @@ function App() {
 
   function openDashboard(dashboard) {
     setActiveDashboard(dashboard);
-
-    const targetId =
-      dashboard === "home"
-        ? "atlas-home"
-        : `atlas-${dashboard}`;
-
-    window.setTimeout(() => {
-      document
-        .getElementById(targetId)
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-    }, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
+
+  const dashboardContent = {
+    home: {
+      title: "Your food-supply picture",
+      description:
+        "See the latest result, the most important numbers, and what ATLAS knows.",
+    },
+    scenario: {
+      title: "Try a what-if question",
+      description:
+        "Choose where a change starts, how big it is, and how much backup supply exists.",
+    },
+    graph: {
+      title: "See the connected map",
+      description:
+        "Follow how food can move from producers to places that need it.",
+    },
+    timeline: {
+      title: "Watch the story over time",
+      description:
+        "See which effects appear first and which effects take longer.",
+    },
+    reports: {
+      title: "Understand the result",
+      description:
+        "Read the evidence, trade links, and explanation behind the simulation.",
+    },
+    settings: {
+      title: "Your ATLAS account",
+      description:
+        "Your saved scenarios stay connected to your signed-in account.",
+    },
+  };
 
   /* =======================================================
      EXPORT
@@ -1159,7 +1182,9 @@ function App() {
         </div>
       </aside>
 
-      <main className="main-content">
+      <main
+        className={`main-content dashboard-${activeDashboard}`}
+      >
         <header className="top-header">
           <div className="mobile-brand">
             <Icon
@@ -1224,9 +1249,23 @@ function App() {
           </div>
         </header>
 
+        <section className="dashboard-intro">
+          <div className="section-label">
+            {activeDashboard.toUpperCase()} DASHBOARD
+          </div>
+
+          <h2>
+            {dashboardContent[activeDashboard].title}
+          </h2>
+
+          <p>
+            {dashboardContent[activeDashboard].description}
+          </p>
+        </section>
+
         <section
           id="atlas-home"
-          className="hero-section"
+          className="hero-section dashboard-view dashboard-home"
         >
           <div className="hero-copy">
             <div className="section-label">
@@ -1316,7 +1355,7 @@ function App() {
 
         <section
           id="atlas-scenario"
-          className="controls-grid"
+          className="controls-grid dashboard-view dashboard-scenario"
         >
           <ControlCard
             number="01"
@@ -1471,7 +1510,7 @@ function App() {
           </ControlCard>
         </section>
 
-        <section className="run-section">
+        <section className="run-section dashboard-view dashboard-scenario">
           <button
             className="run-button"
             onClick={runScenario}
@@ -1534,7 +1573,7 @@ function App() {
         </section>
 
         {savedScenarios.length > 0 && (
-          <section className="saved-scenarios-panel">
+          <section className="saved-scenarios-panel dashboard-view dashboard-scenario">
             <div className="section-label">
               MY SAVED SCENARIOS
             </div>
@@ -1575,7 +1614,7 @@ function App() {
           </section>
         )}
 
-        <section className="metrics-layout">
+        <section className="metrics-layout dashboard-view dashboard-home">
           <Metric
             icon="network"
             label="ACTIVE CASCADE PATHS"
@@ -1644,7 +1683,7 @@ function App() {
 
         <section
           id="atlas-reports"
-          className="dependency-panel"
+          className="dependency-panel dashboard-view dashboard-reports"
         >
           <div className="timeline-header">
             <div>
@@ -1738,7 +1777,7 @@ function App() {
           </div>
         </section>
 
-        <section className="dependency-panel coverage-panel">
+        <section className="dependency-panel coverage-panel dashboard-view dashboard-reports">
           <div className="timeline-header">
             <div>
               <div className="section-label">
@@ -1821,7 +1860,7 @@ function App() {
 
         <section
           id="atlas-graph"
-          className="atlas-graph-wrapper"
+          className="atlas-graph-wrapper dashboard-view dashboard-graph"
         >
           <ButterflyMap
             graph={graphData}
@@ -1846,7 +1885,7 @@ function App() {
 
         <section
           id="atlas-timeline"
-          className="timeline-section"
+          className="timeline-section dashboard-view dashboard-timeline"
         >
           <div className="timeline-header">
             <div>
@@ -2021,7 +2060,7 @@ function App() {
 
         {explanation && (
           <section
-            className="atlas-explanation-section"
+            className="atlas-explanation-section dashboard-view dashboard-reports"
             style={{
               marginTop: "42px",
               padding: "30px",
@@ -2901,7 +2940,7 @@ function App() {
           </section>
         )}
 
-        <section className="scenario-cards">
+        <section className="scenario-cards dashboard-view dashboard-reports">
           <ScenarioCard
             title="BASELINE"
             subtitle="No-shock reference state"
@@ -2944,7 +2983,7 @@ function App() {
           />
         </section>
 
-        <section className="comparison-summary">
+        <section className="comparison-summary dashboard-view dashboard-reports">
           <div className="comparison-summary-icon">
             🌱
           </div>
@@ -2974,7 +3013,7 @@ function App() {
 
         <section
           id="atlas-settings"
-          className="settings-panel"
+          className="settings-panel dashboard-view dashboard-settings"
         >
           <div className="section-label">
             SETTINGS / YOUR ATLAS
