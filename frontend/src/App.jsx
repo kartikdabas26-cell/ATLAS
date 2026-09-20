@@ -27,21 +27,32 @@ async function apiFetch(url, options = {}) {
     );
   }
 
-  const token = await getFirebaseIdToken();
+  async function request() {
+    const token = await getFirebaseIdToken();
+    const headers = new Headers(options.headers || {});
 
-  const headers = new Headers(
-    options.headers || {}
+    headers.set(
+      "Authorization",
+      `Bearer ${token}`
+    );
+
+    return fetch(url, {
+      ...options,
+      headers,
+    });
+  }
+
+  const response = await request();
+
+  if (response.status !== 401) {
+    return response;
+  }
+
+  await new Promise((resolve) =>
+    window.setTimeout(resolve, 300)
   );
 
-  headers.set(
-    "Authorization",
-    `Bearer ${token}`
-  );
-
-  return fetch(url, {
-    ...options,
-    headers,
-  });
+  return request();
 }
 
 /* =========================================================
@@ -306,7 +317,7 @@ function App() {
       );
 
       setGraphError(
-        "Unable to load the ATLAS knowledge graph."
+        "The map is still connecting. You can run the scenario while it finishes loading."
       );
     } finally {
       setGraphLoading(false);
@@ -763,6 +774,11 @@ function App() {
   const explanationTraceability =
     explanation?.traceability || {};
 
+  const selectedShockRegionLabel =
+    shockRegionOptions.find(
+      (option) => option.value === shockRegion
+    )?.label || "Europe";
+
   /* =======================================================
      EXPORT
      ======================================================= */
@@ -1167,24 +1183,22 @@ function App() {
         <section className="hero-section">
           <div className="hero-copy">
             <div className="section-label">
-              ◦ SCENARIO LAB / WHEAT SUPPLY
+              ◦ START HERE / WHEAT SUPPLY
             </div>
 
             <h1>
-              Model the{" "}
+              See what happens when{" "}
               <span>
-                ripple effects
+                food supply changes
               </span>
               <br />
-              of a global shock.
+              around the world.
             </h1>
 
             <p>
-              ATLAS traverses interconnected
-              supply, logistics and market
-              dependencies to expose second-
-              and third-order consequences over
-              time.
+              Choose a place, choose how big the
+              change is, and ATLAS will show you
+              who may be affected over time.
             </p>
           </div>
 
@@ -1244,17 +1258,11 @@ function App() {
         {graphError && (
           <div className="error-message">
             <strong>
-              KNOWLEDGE GRAPH CONNECTION ERROR
+              MAP STILL LOADING
             </strong>
 
             <span>
-              {graphError} Check that
-              <code>
-                {" "}
-                /api/graph{" "}
-              </code>
-              is available from the FastAPI
-              backend.
+              {graphError}
             </span>
           </div>
         )}
@@ -1262,14 +1270,14 @@ function App() {
         <section className="controls-grid">
           <ControlCard
             number="01"
-            label="SHOCK"
-            title="Production Shock"
+            label="1 / WHERE?"
+            title="Choose a place"
             icon="wheat"
             value={`${shockPercent}%`}
           >
             <div className="control-field-label">
               <span>
-                Shock region
+                Where does the change start?
               </span>
             </div>
 
@@ -1328,14 +1336,14 @@ function App() {
 
           <ControlCard
             number="02"
-            label="TIME"
-            title="Simulation Horizon"
+            label="2 / WHEN?"
+            title="Choose a time"
             icon="calendar"
             value={`${horizon} months`}
           >
             <div className="control-field-label horizon-label">
               <span>
-                Time horizon
+                How far ahead should we look?
               </span>
 
               <strong>
@@ -1371,14 +1379,14 @@ function App() {
 
           <ControlCard
             number="03"
-            label="INTERVENTION"
-            title="Alternate Supply"
+            label="3 / HELP"
+            title="Add backup supply"
             icon="leaf"
             value={`+${alternateSupply}%`}
           >
             <div className="control-field-label">
               <span>
-                Alternate supply
+                How much backup is available?
               </span>
 
               <strong>
@@ -1426,7 +1434,7 @@ function App() {
 
             {loading
               ? "SIMULATING..."
-              : "RUN SCENARIO"}
+              : "SHOW ME WHAT HAPPENS"}
 
             <span className="run-arrow">
               →
@@ -1439,7 +1447,7 @@ function App() {
               size={14}
             />
 
-            Europe → North Africa
+            {selectedShockRegionLabel} → North Africa
 
             <span>•</span>
 
@@ -1478,7 +1486,7 @@ function App() {
         {savedScenarios.length > 0 && (
           <section className="saved-scenarios-panel">
             <div className="section-label">
-              SAVED SCENARIOS
+              MY SAVED SCENARIOS
             </div>
 
             <div className="saved-scenarios-list">
