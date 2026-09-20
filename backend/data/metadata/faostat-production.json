@@ -1,0 +1,12 @@
+{
+  "source_organization": "FAOSTAT",
+  "dataset_name": "Crops and livestock products",
+  "url": "https://www.fao.org/faostat/en/#data/QCL",
+  "retrieval_date": "2025-01-01",
+  "reference_year": 2024,
+  "geographic_coverage": "global",
+  "units": "tonnes and hectares",
+  "license": "Public dataset; check FAOSTAT terms for reuse.",
+  "methodology_notes": "Production quantities and associated harvest area/yield are normalized into consistent rows for wheat modeling.",
+  "limitations": "This repository stores a deterministic fixture subset instead of the full live FAOSTAT download."
+}

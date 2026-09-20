@@ -1,0 +1,905 @@
+/* ============================================================
+   ATLAS — BUTTERFLY MAP
+   Completely scoped to the Butterfly Map component
+   ============================================================ */
+
+.atlas-butterfly-section {
+  width: 100%;
+  margin-top: 34px;
+  color: #eafff1;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.atlas-butterfly-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.atlas-butterfly-kicker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 7px;
+
+  color: #73e8a1;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.atlas-butterfly-header h2 {
+  margin: 0;
+
+  color: #effff5;
+
+  font-size: 29px;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.atlas-butterfly-header p {
+  max-width: 680px;
+
+  margin: 8px 0 0;
+
+  color: rgba(220, 245, 230, 0.62);
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.atlas-live-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 9px 13px;
+
+  border: 1px solid rgba(111, 238, 163, 0.16);
+  border-radius: 999px;
+
+  background: rgba(5, 27, 18, 0.75);
+
+  color: #8ff4b0;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+
+  white-space: nowrap;
+}
+
+.atlas-live-status span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #55ee98;
+
+  box-shadow:
+    0 0 6px rgba(85, 238, 152, 0.8),
+    0 0 13px rgba(85, 238, 152, 0.4);
+}
+
+/* ============================================================
+   MAIN LAYOUT
+   ============================================================ */
+
+.atlas-butterfly-layout {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) 285px;
+
+  gap: 16px;
+
+  width: 100%;
+}
+
+/* ============================================================
+   GRAPH CARD
+   ============================================================ */
+
+.atlas-graph-card {
+  position: relative;
+
+  min-width: 0;
+  height: 620px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(105, 235, 160, 0.18);
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 50% 48%,
+      rgba(30, 120, 73, 0.17),
+      transparent 44%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(43, 143, 85, 0.08),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(5, 27, 18, 0.98),
+      rgba(3, 17, 12, 0.98)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 20px 55px rgba(0, 0, 0, 0.18);
+}
+
+.atlas-graph-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(125, 239, 170, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(125, 239, 170, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 42px 42px;
+}
+
+/* ============================================================
+   GRAPH TOOLBAR
+   ============================================================ */
+
+.atlas-graph-toolbar {
+  position: relative;
+  z-index: 20;
+
+  height: 61px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 15px 0 19px;
+
+  border-bottom: 1px solid rgba(112, 235, 162, 0.1);
+
+  background: rgba(4, 20, 14, 0.86);
+
+  backdrop-filter: blur(12px);
+}
+
+.atlas-graph-heading {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: #eafff1;
+}
+
+.atlas-graph-heading svg {
+  color: #69e6a0;
+}
+
+.atlas-graph-heading div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.atlas-graph-heading strong {
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.atlas-graph-heading span {
+  color: rgba(207, 238, 219, 0.47);
+
+  font-size: 9px;
+}
+
+/* ============================================================
+   ZOOM CONTROLS
+   ============================================================ */
+
+.atlas-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  padding: 3px;
+
+  border: 1px solid rgba(126, 237, 170, 0.14);
+  border-radius: 10px;
+
+  background: rgba(1, 10, 7, 0.85);
+}
+
+.atlas-zoom-controls button {
+  width: 29px;
+  height: 28px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: transparent;
+
+  color: rgba(224, 255, 236, 0.72);
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
+}
+
+.atlas-zoom-controls button:hover {
+  background: rgba(103, 235, 157, 0.1);
+  color: #a6ffc5;
+}
+
+.atlas-zoom-controls button:active {
+  transform: scale(0.9);
+}
+
+.atlas-zoom-controls span {
+  min-width: 42px;
+
+  text-align: center;
+
+  color: #98efb7;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+/* ============================================================
+   GRAPH HELP
+   ============================================================ */
+
+.atlas-graph-help {
+  position: absolute;
+
+  top: 77px;
+  left: 20px;
+
+  z-index: 15;
+
+  color: rgba(215, 243, 226, 0.43);
+
+  font-size: 9px;
+}
+
+.atlas-graph-help span {
+  color: #79e9a7;
+  font-weight: 750;
+}
+
+/* ============================================================
+   SVG
+   ============================================================ */
+
+.atlas-butterfly-svg {
+  position: relative;
+  z-index: 5;
+
+  display: block;
+
+  width: 100%;
+  height: 559px;
+
+  overflow: visible;
+
+  touch-action: none;
+}
+
+/* ============================================================
+   GRAPH EDGES
+   ============================================================ */
+
+.atlas-butterfly-svg .atlas-edge {
+  fill: none;
+
+  stroke-linecap: round;
+
+  transition:
+    opacity 160ms ease,
+    stroke-width 160ms ease;
+}
+
+/* ============================================================
+   GRAPH NODES
+   ============================================================ */
+
+.atlas-butterfly-svg .atlas-node {
+  user-select: none;
+}
+
+.atlas-butterfly-svg .atlas-node-glow {
+  pointer-events: none;
+}
+
+.atlas-butterfly-svg .atlas-node-ring {
+  transition:
+    stroke-width 150ms ease,
+    filter 150ms ease;
+}
+
+.atlas-butterfly-svg .atlas-node-core {
+  pointer-events: none;
+}
+
+.atlas-butterfly-svg .atlas-node-icon {
+  pointer-events: none;
+
+  font-family:
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Noto Color Emoji",
+    sans-serif;
+
+  font-size: 16px;
+
+  user-select: none;
+}
+
+.atlas-butterfly-svg .atlas-node-name {
+  pointer-events: none;
+
+  fill: #eafff1;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  paint-order: stroke;
+  stroke: rgba(2, 15, 9, 0.96);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.atlas-butterfly-svg .atlas-node-type {
+  pointer-events: none;
+
+  fill: rgba(175, 229, 194, 0.5);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+
+  paint-order: stroke;
+  stroke: rgba(2, 15, 9, 0.9);
+  stroke-width: 3px;
+}
+
+/* ============================================================
+   GRAPH LEGEND
+   ============================================================ */
+
+.atlas-graph-legend {
+  position: absolute;
+
+  left: 17px;
+  bottom: 16px;
+
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 8px 11px;
+
+  border: 1px solid rgba(125, 237, 169, 0.12);
+  border-radius: 10px;
+
+  background: rgba(2, 14, 9, 0.88);
+
+  backdrop-filter: blur(10px);
+
+  color: rgba(220, 245, 229, 0.62);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.atlas-graph-legend div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  white-space: nowrap;
+}
+
+.atlas-legend-dot {
+  width: 7px;
+  height: 7px;
+
+  display: block;
+
+  border-radius: 50%;
+}
+
+.atlas-legend-dot.region {
+  background: #5bea9b;
+}
+
+.atlas-legend-dot.commodity {
+  background: #ffd866;
+}
+
+.atlas-legend-dot.logistics {
+  background: #55c9ff;
+}
+
+.atlas-legend-dot.market {
+  background: #c58aff;
+}
+
+/* ============================================================
+   EDGE LEGEND
+   ============================================================ */
+
+.atlas-edge-legend {
+  position: absolute;
+
+  right: 17px;
+  bottom: 16px;
+
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 8px 10px;
+
+  border: 1px solid rgba(125, 237, 169, 0.1);
+  border-radius: 10px;
+
+  background: rgba(2, 14, 9, 0.88);
+
+  color: rgba(220, 245, 229, 0.58);
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.atlas-edge-legend div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.atlas-edge-sample {
+  width: 18px;
+  height: 2px;
+
+  display: inline-block;
+
+  border-radius: 3px;
+}
+
+.atlas-edge-sample.supply {
+  background: #66e7a4;
+}
+
+.atlas-edge-sample.route {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #58caff 0 4px,
+      transparent 4px 7px
+    );
+}
+
+.atlas-edge-sample.price {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #ffd75e 0 3px,
+      transparent 3px 6px
+    );
+}
+
+/* ============================================================
+   BUTTERFLIES
+   ============================================================ */
+
+.atlas-floating-butterfly {
+  position: absolute;
+
+  z-index: 18;
+
+  pointer-events: none;
+
+  opacity: 0.52;
+
+  font-size: 20px;
+
+  filter:
+    drop-shadow(
+      0 0 9px rgba(255, 86, 200, 0.25)
+    );
+}
+
+.atlas-floating-butterfly.butterfly-one {
+  top: 112px;
+  right: 43px;
+
+  animation:
+    atlasButterflyFloatOne
+    7s
+    ease-in-out
+    infinite;
+}
+
+.atlas-floating-butterfly.butterfly-two {
+  top: 145px;
+  left: 35%;
+
+  font-size: 15px;
+  opacity: 0.38;
+
+  animation:
+    atlasButterflyFloatTwo
+    9s
+    ease-in-out
+    infinite;
+}
+
+@keyframes atlasButterflyFloatOne {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-4deg);
+  }
+
+  50% {
+    transform:
+      translate3d(-18px, 15px, 0)
+      rotate(6deg);
+  }
+}
+
+@keyframes atlasButterflyFloatTwo {
+  0%,
+  100% {
+    transform:
+      translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform:
+      translate3d(14px, -12px, 0);
+  }
+}
+
+/* ============================================================
+   INSPECTOR
+   ============================================================ */
+
+.atlas-node-inspector {
+  height: 620px;
+
+  min-width: 0;
+
+  overflow-y: auto;
+
+  padding: 20px;
+
+  border: 1px solid rgba(105, 235, 160, 0.17);
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(8, 31, 20, 0.98),
+      rgba(4, 19, 13, 0.98)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 20px 55px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================================
+   EMPTY INSPECTOR
+   ============================================================ */
+
+.atlas-inspector-empty {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.atlas-empty-icon {
+  width: 60px;
+  height: 60px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 16px;
+
+  border: 1px solid rgba(102, 235, 158, 0.16);
+  border-radius: 17px;
+
+  background: rgba(93, 230, 153, 0.045);
+
+  color: #6ee7a0;
+}
+
+.atlas-empty-label {
+  color: #82e9aa;
+
+  font-size: 8px;
+  font-weight: 850;
+
+  letter-spacing: 1.6px;
+}
+
+.atlas-inspector-empty h3 {
+  margin: 8px 0 7px;
+
+  color: #edfff4;
+
+  font-size: 18px;
+}
+
+.atlas-inspector-empty p {
+  max-width: 205px;
+
+  margin: 0;
+
+  color: rgba(211, 239, 221, 0.52);
+
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.atlas-empty-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 19px;
+
+  color: #83eaaa;
+
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.atlas-empty-hint span {
+  font-size: 13px;
+}
+
+/* ============================================================
+   INSPECTOR SELECTED NODE
+   ============================================================ */
+
+.atlas-inspector-node-icon {
+  width: 55px;
+  height: 55px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 14px;
+
+  border: 1px solid;
+  border-radius: 15px;
+
+  font-size: 25px;
+}
+
+.atlas-inspector-type {
+  color: #82e8a8;
+
+  font-size: 8px;
+  font-weight: 850;
+
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.atlas-node-inspector h3 {
+  margin: 6px 0 5px;
+
+  color: #effff5;
+
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.atlas-inspector-role {
+  margin: 0;
+
+  color: rgba(213, 241, 223, 0.55);
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.atlas-inspector-divider {
+  height: 1px;
+
+  margin: 17px 0;
+
+  background: rgba(131, 239, 173, 0.09);
+}
+
+.atlas-inspector-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-bottom: 8px;
+
+  color: #95edb4;
+
+  font-size: 8px;
+  font-weight: 850;
+
+  letter-spacing: 1.3px;
+}
+
+.atlas-inspector-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 9px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+}
+
+.atlas-inspector-row > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: rgba(218, 243, 227, 0.58);
+
+  font-size: 10px;
+}
+
+.atlas-inspector-row > div svg {
+  color: rgba(126, 236, 169, 0.7);
+}
+
+.atlas-inspector-row strong {
+  color: #e8fff0;
+
+  font-size: 11px;
+}
+
+.atlas-scenario-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 8px 0;
+}
+
+.atlas-scenario-row span {
+  color: rgba(218, 243, 227, 0.56);
+
+  font-size: 10px;
+}
+
+.atlas-scenario-row strong {
+  color: #a1f2bc;
+
+  font-size: 11px;
+}
+
+.atlas-inspector-note {
+  margin-top: 15px;
+
+  padding: 11px;
+
+  border: 1px solid rgba(113, 238, 165, 0.09);
+  border-radius: 11px;
+
+  background: rgba(88, 229, 151, 0.035);
+
+  color: rgba(211, 239, 220, 0.5);
+
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1150px) {
+  .atlas-butterfly-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .atlas-node-inspector {
+    height: auto;
+    min-height: 320px;
+  }
+
+  .atlas-inspector-empty {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 750px) {
+  .atlas-butterfly-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .atlas-graph-card {
+    height: 560px;
+  }
+
+  .atlas-butterfly-svg {
+    height: 499px;
+  }
+
+  .atlas-graph-heading span {
+    display: none;
+  }
+
+  .atlas-graph-legend,
+  .atlas-edge-legend {
+    position: static;
+
+    margin: 0 10px 10px;
+
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "source_organization": "UN Comtrade",
+  "dataset_name": "HS1001 wheat and meslin",
+  "url": "https://comtradeplus.un.org/",
+  "retrieval_date": "2025-01-01",
+  "reference_year": 2024,
+  "geographic_coverage": "global",
+  "units": "USD and kg",
+  "license": "Public dataset; comply with Comtrade terms and any national reporting conditions.",
+  "methodology_notes": "Rows preserve trade value and quantity separately so exposure and physical flow are not conflated.",
+  "limitations": "This fixture is intentionally reduced to a deterministic subset for repository testing; it is not a complete global trade archive."
+}

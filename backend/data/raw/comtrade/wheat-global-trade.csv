@@ -1,0 +1,20 @@
+reporter,partner,year,flow,commodity_code,trade_value_usd,quantity_kg
+France,Egypt,2024,Export,1001,42000000,1190000
+France,Morocco,2024,Export,1001,39000000,1100000
+France,Algeria,2024,Export,1001,31000000,990000
+Germany,Egypt,2024,Export,1001,36000000,1050000
+Germany,Morocco,2024,Export,1001,34000000,1000000
+Germany,Algeria,2024,Export,1001,32000000,970000
+Poland,Egypt,2024,Export,1001,22000000,700000
+Poland,Morocco,2024,Export,1001,26000000,780000
+Romania,Egypt,2024,Export,1001,21000000,650000
+Romania,Morocco,2024,Export,1001,20000000,620000
+Romania,Algeria,2024,Export,1001,19000000,610000
+Spain,Egypt,2024,Export,1001,17000000,520000
+Spain,Morocco,2024,Export,1001,18000000,540000
+Spain,Algeria,2024,Export,1001,20000000,560000
+Canada,Egypt,2024,Export,1001,8000000,230000
+Australia,Egypt,2024,Export,1001,7500000,220000
+Canada,Morocco,2024,Export,1001,7000000,200000
+France,Saudi Arabia,2024,Export,1001,14000000,420000
+United States,Egypt,2024,Export,1001,5200000,170000
