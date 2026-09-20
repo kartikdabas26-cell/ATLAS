@@ -250,6 +250,9 @@ function App() {
   const [assistantLoading, setAssistantLoading] =
     useState(false);
 
+  const [assistantOpen, setAssistantOpen] =
+    useState(false);
+
   const [activeDashboard, setActiveDashboard] =
     useState("home");
 
@@ -908,11 +911,6 @@ function App() {
       description:
         "Your saved scenarios stay connected to your signed-in account.",
     },
-    assistant: {
-      title: "Ask ATLAS anything",
-      description:
-        "Get simple answers with links to public sources and the current simulation context.",
-    },
   };
 
   /* =======================================================
@@ -1177,6 +1175,17 @@ function App() {
         🌿
       </div>
 
+      <button
+        type="button"
+        className={`ask-atlas-launcher ${assistantOpen ? "open" : ""}`}
+        onClick={() => setAssistantOpen((isOpen) => !isOpen)}
+        aria-label={assistantOpen ? "Close Ask ATLAS" : "Open Ask ATLAS"}
+        title="Ask ATLAS"
+      >
+        <span aria-hidden="true">🤖</span>
+        <small>Ask me</small>
+      </button>
+
       <aside className="sidebar">
         <div className="brand-block">
           <div className="brand-icon">
@@ -1212,13 +1221,6 @@ function App() {
             label="Scenario Lab"
             active={activeDashboard === "scenario"}
             onClick={() => openDashboard("scenario")}
-          />
-
-          <NavItem
-            icon="chat"
-            label="Ask ATLAS"
-            active={activeDashboard === "assistant"}
-            onClick={() => openDashboard("assistant")}
           />
 
           <NavItem
@@ -1350,7 +1352,16 @@ function App() {
           </p>
         </section>
 
-        <section className="ask-atlas-panel dashboard-view dashboard-assistant">
+        {assistantOpen && (
+        <section className="ask-atlas-panel ask-atlas-popover">
+          <button
+            type="button"
+            className="ask-atlas-close"
+            onClick={() => setAssistantOpen(false)}
+            aria-label="Close Ask ATLAS"
+          >
+            ×
+          </button>
           <div className="ask-atlas-heading">
             <div>
               <div className="section-label">ASK ATLAS / LIVE RESEARCH</div>
@@ -1414,6 +1425,7 @@ function App() {
             </button>
           </form>
         </section>
+        )}
 
         <section
           id="atlas-home"
