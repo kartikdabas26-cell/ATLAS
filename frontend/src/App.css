@@ -373,6 +373,10 @@ button {
   display: none;
 }
 
+.main-content:not(.dashboard-assistant) .dashboard-assistant {
+  display: none;
+}
+
 .dashboard-intro {
   max-width: 780px;
   padding: 34px 0 24px;
@@ -397,6 +401,137 @@ button {
 
 .dashboard-view {
   animation: dashboard-reveal 0.35s ease both;
+}
+
+.ask-atlas-panel {
+  margin: 0 0 34px;
+  padding: 28px;
+  border: 1px solid rgba(133, 206, 164, 0.22);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(10, 42, 29, 0.94), rgba(7, 24, 21, 0.96));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.ask-atlas-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.ask-atlas-heading h2 {
+  margin: 8px 0;
+  color: #e8f5eb;
+  font-family: Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.ask-atlas-heading p {
+  max-width: 700px;
+  margin: 0;
+  color: rgba(230, 244, 235, 0.68);
+  line-height: 1.65;
+}
+
+.ask-atlas-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 13px;
+  border: 1px solid rgba(145, 255, 190, 0.3);
+  border-radius: 999px;
+  color: #91ffbe;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.ask-atlas-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 430px;
+  margin: 25px 0 18px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.ask-atlas-message {
+  max-width: 82%;
+  padding: 15px 17px;
+  border: 1px solid rgba(133, 206, 164, 0.16);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ask-atlas-message.user {
+  align-self: flex-end;
+  border-color: rgba(145, 255, 190, 0.22);
+  background: rgba(47, 188, 105, 0.12);
+}
+
+.ask-atlas-message-label {
+  color: #91ffbe;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.ask-atlas-message p {
+  margin: 7px 0 0;
+  color: #e4f1e7;
+  line-height: 1.6;
+}
+
+.ask-atlas-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ask-atlas-sources a {
+  color: #9bdab0;
+  font-size: 11px;
+  text-decoration: underline;
+}
+
+.ask-atlas-form {
+  display: flex;
+  gap: 10px;
+}
+
+.ask-atlas-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 13px 15px;
+  border: 1px solid rgba(133, 206, 164, 0.22);
+  border-radius: 11px;
+  outline: 0;
+  background: rgba(0, 12, 8, 0.55);
+  color: #e4f1e7;
+  font: inherit;
+}
+
+.ask-atlas-form button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 19px;
+  border: 0;
+  border-radius: 11px;
+  background: #5df291;
+  color: #062714;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ask-atlas-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
 @keyframes dashboard-reveal {

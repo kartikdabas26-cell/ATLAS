@@ -176,6 +176,13 @@ function Icon({ type, size = 20 }) {
         <path d="m9 12 2 2 4-5" />
       </>
     ),
+
+    chat: (
+      <>
+        <path d="M5 5h14v10H9l-4 4V5Z" />
+        <path d="M8 9h8M8 12h5" />
+      </>
+    ),
   };
 
   return <svg {...common}>{icons[type] || icons.leaf}</svg>;
@@ -228,6 +235,20 @@ function getUserInitials(name, email) {
 
 function App() {
   const [auth, setAuth] = useState(null);
+
+  const [assistantQuestion, setAssistantQuestion] =
+    useState("");
+
+  const [assistantMessages, setAssistantMessages] =
+    useState([
+      {
+        role: "assistant",
+        text: "Hi. Ask me about food supply, countries, trade, or what this simulation means.",
+      },
+    ]);
+
+  const [assistantLoading, setAssistantLoading] =
+    useState(false);
 
   const [activeDashboard, setActiveDashboard] =
     useState("home");
@@ -802,6 +823,60 @@ function App() {
     });
   }
 
+  async function askAtlas(event) {
+    event.preventDefault();
+    const question = assistantQuestion.trim();
+    if (!question || assistantLoading) return;
+
+    setAssistantQuestion("");
+    setAssistantMessages((messages) => [
+      ...messages,
+      { role: "user", text: question },
+    ]);
+    setAssistantLoading(true);
+
+    try {
+      const response = await apiFetch(`${API_URL}/api/ask`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question,
+          context: {
+            shock_region: shockRegion,
+            shock_percent: shockPercent,
+            time_horizon_months: horizon,
+            alternate_supply_percent: alternateSupply,
+          },
+        }),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result.detail || "Ask ATLAS request failed.");
+      }
+
+      setAssistantMessages((messages) => [
+        ...messages,
+        {
+          role: "assistant",
+          text: result.answer,
+          sources: result.sources || [],
+          mode: result.mode,
+        },
+      ]);
+    } catch (err) {
+      setAssistantMessages((messages) => [
+        ...messages,
+        {
+          role: "assistant",
+          text: err.message || "Ask ATLAS could not answer right now.",
+        },
+      ]);
+    } finally {
+      setAssistantLoading(false);
+    }
+  }
+
   const dashboardContent = {
     home: {
       title: "Your food-supply picture",
@@ -832,6 +907,11 @@ function App() {
       title: "Your ATLAS account",
       description:
         "Your saved scenarios stay connected to your signed-in account.",
+    },
+    assistant: {
+      title: "Ask ATLAS anything",
+      description:
+        "Get simple answers with links to public sources and the current simulation context.",
     },
   };
 
@@ -1135,6 +1215,13 @@ function App() {
           />
 
           <NavItem
+            icon="chat"
+            label="Ask ATLAS"
+            active={activeDashboard === "assistant"}
+            onClick={() => openDashboard("assistant")}
+          />
+
+          <NavItem
             icon="graph"
             label="Network Graph"
             active={activeDashboard === "graph"}
@@ -1261,6 +1348,71 @@ function App() {
           <p>
             {dashboardContent[activeDashboard].description}
           </p>
+        </section>
+
+        <section className="ask-atlas-panel dashboard-view dashboard-assistant">
+          <div className="ask-atlas-heading">
+            <div>
+              <div className="section-label">ASK ATLAS / LIVE RESEARCH</div>
+              <h2>What are you curious about?</h2>
+              <p>
+                Ask in your own words. ATLAS checks public information and
+                explains what it can prove, what it assumes, and where to read more.
+              </p>
+            </div>
+            <div className="ask-atlas-badge">
+              <Icon type="shield" size={16} />
+              SOURCE-AWARE
+            </div>
+          </div>
+
+          <div className="ask-atlas-messages" aria-live="polite">
+            {assistantMessages.map((message, index) => (
+              <div
+                className={`ask-atlas-message ${message.role}`}
+                key={`${message.role}-${index}`}
+              >
+                <span className="ask-atlas-message-label">
+                  {message.role === "user" ? "YOU" : "ATLAS"}
+                </span>
+                <p>{message.text}</p>
+                {message.sources?.length > 0 && (
+                  <div className="ask-atlas-sources">
+                    {message.sources.slice(0, 3).map((source) => (
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        key={source.url}
+                      >
+                        {source.title}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            {assistantLoading && (
+              <div className="ask-atlas-message assistant">
+                <span className="ask-atlas-message-label">ATLAS</span>
+                <p>Looking through public sources...</p>
+              </div>
+            )}
+          </div>
+
+          <form className="ask-atlas-form" onSubmit={askAtlas}>
+            <input
+              value={assistantQuestion}
+              onChange={(event) => setAssistantQuestion(event.target.value)}
+              placeholder="Example: Why can a wheat shortage affect bread prices?"
+              aria-label="Ask ATLAS a question"
+              maxLength={500}
+            />
+            <button type="submit" disabled={assistantLoading || !assistantQuestion.trim()}>
+              <Icon type="chat" size={17} />
+              Ask
+            </button>
+          </form>
         </section>
 
         <section

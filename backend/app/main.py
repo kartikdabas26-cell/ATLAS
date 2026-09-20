@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, PlainTextResponse
 
 from app.auth import AuthenticationError, get_current_user, verify_firebase_id_token
+from app.assistant import AskRequest, answer_question
 from app.graph.builder import build_wheat_graph
 from app.data.dependency import calculate_multi_year_dependencies
 from app.data.layers import get_layer_coverage
@@ -59,14 +60,14 @@ def _allowed_origins() -> list[str]:
         "",
     ).strip().rstrip("/")
 
-    if production_origin:
-        origins.append(production_origin)
-
     known_production_origin = (
         "https://atlas-global-consequence-simulation-ten.vercel.app"
     )
     if known_production_origin not in origins:
         origins.append(known_production_origin)
+
+    if production_origin and production_origin not in origins:
+        origins.append(production_origin)
 
     return origins
 
@@ -93,6 +94,7 @@ def _rate_limited(request: Request) -> bool:
         "/api/scenario/compare",
         "/api/scenario/export",
         "/api/scenario/node",
+        "/api/ask",
     }
 
     if (
@@ -232,6 +234,25 @@ def get_graph():
         "nodes": nodes,
         "edges": edges,
     }
+
+
+@app.post("/api/ask")
+def ask_atlas(
+    request: AskRequest,
+    http_request: Request,
+):
+    get_current_user(http_request)
+
+    try:
+        return answer_question(
+            request.question,
+            request.context,
+        )
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        ) from exc
 
 
 @app.post("/api/scenario/run")

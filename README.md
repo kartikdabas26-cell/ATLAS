@@ -155,6 +155,23 @@ ATLAS_FRONTEND_ORIGIN=http://127.0.0.1:5173
 5. Open `http://127.0.0.1:5173/` and select **Continue with Google**. Restart Vite
    after changing `.env.local`, because Vite reads environment variables at startup.
 
+### Ask ATLAS and public-source search
+
+The **Ask ATLAS** dashboard searches public Wikipedia results and links to the source
+pages it used. It works without an AI key and returns a transparent source summary.
+For richer plain-language answers, configure any OpenAI-compatible provider in
+`backend/.env`:
+
+```text
+ATLAS_AI_API_KEY=your-provider-key
+ATLAS_AI_BASE_URL=https://api.openai.com/v1
+ATLAS_AI_MODEL=gpt-4o-mini
+```
+
+The model receives the user's question, the current ATLAS scenario settings, and
+retrieved public-source snippets. It is instructed to separate observed facts from
+assumptions and does not replace the deterministic simulation or professional advice.
+
 For production, use HTTPS, set `ATLAS_FRONTEND_ORIGIN` to the exact deployed frontend
 origin, configure the production domain in Firebase Authorized domains, and provide the
 Admin SDK credentials through the deployment secret manager. Firebase client sign-out
