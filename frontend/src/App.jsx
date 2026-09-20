@@ -383,7 +383,7 @@ function App() {
       );
 
       setError(
-        "Unable to connect to the ATLAS simulation engine. Check the deployed ATLAS API and try again."
+        "ATLAS could not run this yet. Make sure you are signed in and the backend is running."
       );
     } finally {
       setLoading(false);
@@ -616,6 +616,10 @@ function App() {
     return onAuthStateChanged(
       firebaseAuth,
       (user) => {
+        setError("");
+        setGraphError("");
+        setDependencyError("");
+        setCoverageError("");
         setAuth(
           user
             ? {
