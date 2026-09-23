@@ -48,6 +48,11 @@ export async function getFirebaseIdToken(
 
   let user = getCurrentUser();
 
+  if (!user && typeof firebaseAuth.authStateReady === "function") {
+    await firebaseAuth.authStateReady();
+    user = getCurrentUser();
+  }
+
   if (!user) {
     user = await new Promise((resolve) => {
       let settled = false;
